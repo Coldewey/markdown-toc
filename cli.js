@@ -4,9 +4,10 @@ var fs = require('fs');
 var toc = require('./index.js');
 var utils = require('./lib/utils');
 var args = utils.minimist(process.argv.slice(2), {
-  boolean: ['i', 'json', 'firsth1', 'stripHeadingTags'],
+  boolean: ['i', 'json', 'firsth1', 'stripHeadingTags', 'escapeQuery'],
   string: ['append', 'bullets', 'indent'],
   default: {
+    escapeQuery: true,
     firsth1: true,
     stripHeadingTags: true
   }
@@ -37,9 +38,12 @@ if (args._.length !== 1) {
     '',
     '  --no-stripHeadingTags: Do not strip extraneous HTML tags from heading',
     '                         text before slugifying',
-    '',  
+    '',
     '  --indent:     Provide the indentation to use - defaults to \'  \'',
-    '                (to specify a tab, use the bash-escaped $\'\\t\')'
+    '                (to specify a tab, use the bash-escaped $\'\\t\')',
+    '',
+    '  --escapeQuery (default: true): Escape the query string and replace diacritics in links.',
+    '',
   ].join('\n'));
   process.exit(1);
 }
